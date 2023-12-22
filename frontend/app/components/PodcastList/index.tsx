@@ -1,31 +1,44 @@
+import NoTableData from '../NoTableData';
 import { Podcast } from '@/app/types/podcast.type';
 
 type PodcastListProps = {
-  podcasts?: Podcast[]
+  podcasts: Podcast[];
 };
 
 const PodcastList = ({ podcasts }: PodcastListProps) => (
   <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-    <table className="w-full text-sm text-left rtl:text-right text-gray-400">
+    <table className="w-full text-sm text-left text-gray-400">
       <thead className="text-xs uppercase bg-gray-700 text-gray-400">
         <tr>
+          <th scope="col" className="px-6 py-3">
+            Id
+          </th>
           <th scope="col" className="px-16 py-3">
-              <span className="sr-only">Image</span>
+            <span className="sr-only">Image</span>
           </th>
           <th scope="col" className="px-6 py-3">
-              Id
+            Podcast ID
           </th>
           <th scope="col" className="px-6 py-3">
-              Title
+            Title
           </th>
           <th scope="col" className="px-6 py-3">
-              Description
+            Description
           </th>
         </tr>
       </thead>
       <tbody>
-        {podcasts?.map((item, index) => (
-          <tr key={index} className="border-b bg-gray-800 border-gray-700 hover:bg-gray-600">
+        {podcasts.length === 0 ? (
+          <tr>
+            <td colSpan={5}>
+              <NoTableData />
+            </td>
+          </tr>
+        ) : podcasts.map((item, index) => (
+          <tr key={index+1} className="border-b bg-gray-800 border-gray-700 hover:bg-gray-600">
+            <td className="p-4">
+              {index+1}
+            </td>
             <td className="p-4">
               <img src={item.images.thumbnail} className="w-16 md:w-32 max-w-full max-h-full" alt="podcast image" />
             </td>
