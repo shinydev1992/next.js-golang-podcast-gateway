@@ -1,10 +1,11 @@
 'use client'
 import { useState, useEffect } from 'react';
 import { useDebounce } from 'react-use';
-import axios from 'axios';
-import { Podcast } from '@/app/types/podcast.types';
+import { useQuery } from '@apollo/client';
+import { GET_PODCASTS } from './graphql/podcast';
+import { Podcast } from '@/app/types/podcast.type';
 
-import PodcastList from './components/ProductList';
+import PodcastList from './components/PodcastList';
 import SearchBar from './components/SearchBar';
 import PageSizeDropdown from './components/PageSizeDropdown';
 import Pagination from './components/Pagination';
@@ -15,25 +16,29 @@ const Home = () => {
   const [pageSize, SetPageSize] = useState(10);
   const [page, setPage] = useState(1);
   const [podcasts, setPodcasts] = useState<Array<Podcast>>();
-  const [loading, setLoading] = useState(false);
+
+  const { loading, refetch } = useQuery(GET_PODCASTS, {
+    notifyOnNetworkStatusChange: true,
+    variables: { query: `search=${search}&page=${page}&limit=${pageSize}` },
+    onCompleted(res) {
+      setPodcasts(res.getPodcasts);
+    },
+    onError(err) {
+      throw err;
+    }
+  });
 
   useDebounce(() => {
     if (search !== input) {
       setSearch(input);
       SetPageSize(10);
       setPage(1)
+
+      refetch({
+        query: `search=${input}&page=${page}&limit=${pageSize}`,
+      })
     }
   }, 500, [input, search]);
-
-  useEffect(() => {
-    setLoading(true);
-
-    axios.get(`http://localhost:8080/podcasts?search=${search}&page=${page}&limit=${pageSize}`)
-      .then((response) => {
-        setPodcasts(response.data);
-        setLoading(false);
-      })
-  }, [search, page, pageSize])
 
   return (
     <div className="flex flex-col gap-4 p-8">
