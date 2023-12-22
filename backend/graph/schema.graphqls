@@ -1,0 +1,25 @@
+type Podcast {
+  id: String!
+  title: String!
+  images: Image!
+  isExclusive: Boolean!
+  publisherName: String!
+  publisherId: String!
+  mediaType: String!
+  description: String!
+  categoryId: String!
+  categoryName: String!
+  hasFreeEpisodes: Boolean!
+  playSequence: String!
+}
+
+type Image {
+  default: String!
+  featured: String!
+  thumbnail: String!
+  wide: String!
+}
+
+type Query {
+  getPodcasts(query: String!): [Podcast!]!
+}

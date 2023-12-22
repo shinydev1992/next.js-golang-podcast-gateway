@@ -2,8 +2,10 @@ package middleware
 
 import (
 	"backend/config"
+	"backend/domain"
 	"context"
 	"fmt"
+	"net/http"
 	"time"
 
 	ratelimit "github.com/JGLTechnologies/gin-rate-limit"
@@ -32,5 +34,11 @@ func RateLimitMiddleware() gin.HandlerFunc {
 	})
 
 	// Return the middleware function for handling rate limit
-	return ratelimit.RateLimiter(store, nil)
+	return ratelimit.RateLimiter(store, &ratelimit.Options{
+		ErrorHandler: func(c *gin.Context, info ratelimit.Info) {
+			c.Header("X-Rate-Limit-Limit", fmt.Sprintf("%d", info.Limit))
+			c.Header("X-Rate-Limit-Reset", fmt.Sprintf("%d", info.ResetTime.Unix()))
+			c.JSON(http.StatusTooManyRequests, domain.ErrTooManyRequests)
+		},
+	})
 }
