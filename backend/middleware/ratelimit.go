@@ -29,8 +29,8 @@ func RateLimitMiddleware() gin.HandlerFunc {
 				return nil
 			},
 		}),
-		Rate:  5 * time.Second,
-		Limit: 2,
+		Rate:  time.Second,
+		Limit: 5,
 	})
 
 	// Return the middleware function for handling rate limit
