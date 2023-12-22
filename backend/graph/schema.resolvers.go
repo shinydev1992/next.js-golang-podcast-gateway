@@ -3,14 +3,13 @@ package graph
 import (
 	"backend/graph/model"
 	"backend/services"
-	"backend/utils"
 	"context"
 )
 
 // Podcast is the resolver for the podcast field.
-func (r *queryResolver) Podcast(ctx context.Context, query string) ([]*model.Podcast, error) {
+func (r *queryResolver) GetPodcasts(ctx context.Context, query string) ([]*model.Podcast, error) {
 	// Get podcasts from the mockup
-	podcasts, err := services.GetPodcastsFromMockup(utils.MOCKUP_PODCAST_API_URL + "?" + query)
+	podcasts, err := services.GetPodcastsFromMockup(query)
 	if err != nil {
 		return nil, err
 	}

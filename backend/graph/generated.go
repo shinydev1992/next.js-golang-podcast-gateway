@@ -69,12 +69,12 @@ type ComplexityRoot struct {
 	}
 
 	Query struct {
-		Podcast func(childComplexity int, query string) int
+		GetPodcasts func(childComplexity int, query string) int
 	}
 }
 
 type QueryResolver interface {
-	Podcast(ctx context.Context, query string) ([]*model.Podcast, error)
+	GetPodcasts(ctx context.Context, query string) ([]*model.Podcast, error)
 }
 
 type executableSchema struct {
@@ -208,17 +208,17 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Podcast.Title(childComplexity), true
 
-	case "Query.podcast":
-		if e.complexity.Query.Podcast == nil {
+	case "Query.getPodcasts":
+		if e.complexity.Query.GetPodcasts == nil {
 			break
 		}
 
-		args, err := ec.field_Query_podcast_args(context.TODO(), rawArgs)
+		args, err := ec.field_Query_getPodcasts_args(context.TODO(), rawArgs)
 		if err != nil {
 			return 0, false
 		}
 
-		return e.complexity.Query.Podcast(childComplexity, args["query"].(string)), true
+		return e.complexity.Query.GetPodcasts(childComplexity, args["query"].(string)), true
 
 	}
 	return 0, false
@@ -343,7 +343,7 @@ func (ec *executionContext) field_Query___type_args(ctx context.Context, rawArgs
 	return args, nil
 }
 
-func (ec *executionContext) field_Query_podcast_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_Query_getPodcasts_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
 	var arg0 string
@@ -1110,8 +1110,8 @@ func (ec *executionContext) fieldContext_Podcast_playSequence(ctx context.Contex
 	return fc, nil
 }
 
-func (ec *executionContext) _Query_podcast(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_podcast(ctx, field)
+func (ec *executionContext) _Query_getPodcasts(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_getPodcasts(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -1124,7 +1124,7 @@ func (ec *executionContext) _Query_podcast(ctx context.Context, field graphql.Co
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Podcast(rctx, fc.Args["query"].(string))
+		return ec.resolvers.Query().GetPodcasts(rctx, fc.Args["query"].(string))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -1141,7 +1141,7 @@ func (ec *executionContext) _Query_podcast(ctx context.Context, field graphql.Co
 	return ec.marshalNPodcast2ᚕᚖbackendᚋgraphᚋmodelᚐPodcastᚄ(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Query_podcast(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Query_getPodcasts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Query",
 		Field:      field,
@@ -1184,7 +1184,7 @@ func (ec *executionContext) fieldContext_Query_podcast(ctx context.Context, fiel
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_podcast_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Query_getPodcasts_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -3268,7 +3268,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Query")
-		case "podcast":
+		case "getPodcasts":
 			field := field
 
 			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
@@ -3277,7 +3277,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._Query_podcast(ctx, field)
+				res = ec._Query_getPodcasts(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}

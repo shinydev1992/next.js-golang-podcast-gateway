@@ -3,13 +3,13 @@ module backend
 go 1.20
 
 require (
+	github.com/JGLTechnologies/gin-rate-limit v1.5.4
 	github.com/gin-gonic/gin v1.9.1
 	github.com/redis/go-redis/v9 v9.0.2
 	github.com/vektah/gqlparser/v2 v2.5.10
 )
 
 require (
-	github.com/JGLTechnologies/gin-rate-limit v1.5.4
 	github.com/agnivade/levenshtein v1.1.1 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
