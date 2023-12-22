@@ -1,4 +1,4 @@
-import { Podcast } from '@/app/types/podcast.types';
+import { Podcast } from '@/app/types/podcast.type';
 
 type PodcastListProps = {
   podcasts?: Podcast[]
@@ -24,8 +24,8 @@ const PodcastList = ({ podcasts }: PodcastListProps) => (
         </tr>
       </thead>
       <tbody>
-        {podcasts?.map(item => (
-          <tr className="border-b bg-gray-800 border-gray-700 hover:bg-gray-600">
+        {podcasts?.map((item, index) => (
+          <tr key={index} className="border-b bg-gray-800 border-gray-700 hover:bg-gray-600">
             <td className="p-4">
               <img src={item.images.thumbnail} className="w-16 md:w-32 max-w-full max-h-full" alt="podcast image" />
             </td>
