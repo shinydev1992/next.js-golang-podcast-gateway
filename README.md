@@ -43,7 +43,7 @@ docker build -t podcast-backend .
 docker run -d -p 8080:8080 podcast-backend
 ```
 
-Now, the backend service will be available on `http://localhost:8000`.
+Now, the backend service will be available on `http://localhost:8080`.
 
 ### Development
 
