@@ -1,46 +1,76 @@
-# claimclam-takehome-assessment
-Takehome assessment for a fullstack engineer position
+## Getting Started
 
-## Summary
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-Imagine that you have a podcasts microservice (please see API spec below). For this assessment you need to create a gateway service that will be utilizing podcast service and create a UI for it.
+### Prerequisites
 
+What things you need to install the software and how to install them.
 
-some documentation:
+- Docker
+- Docker Compose
+- Node.js v18.17.0 (for development without Docker)
+- Go v1.20.5
+
+### Installing
+
+A step by step series of examples that tell you how to get a development env running. 
+
+#### Frontend:
+
+```bash
+# Navigate to the frontend directory
+cd frontend
+
+# Build the docker image
+docker build -t podcast-frontend .
+
+# Run the docker container
+docker run -d -p 3000:3000 podcast-frontend
 ```
-Service URL: https://601f1754b5a0e9001706a292.mockapi.io
-API Spec
-Add query params to GET request:
-/podcasts - get all podcasts (https://601f1754b5a0e9001706a292.mockapi.io/podcasts)
-/podcasts?search=Comedy - search by all fields for string Comedy
-/podcasts?title=The%20Trevor%20Noah%20Podcast - search any field by property name (title)
-/podcasts?categoryName=History - search any field by property name (categoryName)
 
-PAGINATION
-Add query params to GET requests:
+Now, you can navigate to `http://localhost:3000` in your web browser to see the application running.
 
-/podcats?page=1&limit=10
-or /podcasts?p=1&l=10
+#### Backend:
+
+```bash
+# Navigate to the backend directory
+cd backend
+
+# Build the docker image
+docker build -t podcast-backend .
+
+# Run the docker container
+docker run -d -p 8080:8080 podcast-backend
 ```
 
-## Requirements
-Backend(golang prefeerred):
-1. Create an api-gateway service for podcasts microservice with basic error handling and input validation functions
+Now, the backend service will be available on `http://localhost:8000`.
 
-UI(next.js preferred):
-1. Create a controlled input field to fetch podcasts. By default you should request all podcasts on initial load.
+### Development
 
-2. Render a list of podcasts from the request. Feel free to use any data from the response that you find relevant or necessary to show (Don't worry about styling here yet).
+Instructions for setting up the development environment.
 
-3. Handle UI states for:
-- When the podcasts are being fetched.
-- When the response returns some podasts.
-- When the response returns no podcasts that match the search value.
+#### Frontend:
 
-## Bonus
+```bash
+# Navigate to the frontend directory
+cd frontend
 
-1. Add some styling to the search results. Feel free to render as a list, cards, etc. Whatever would be a nice UI for the end user.
-2. Add some pagination. The api supports "page" and "limit" params.
-3. Add a debounce of 500ms to avoid fetching on every key press.
-4. Use graphQL as a protocol between UI and API gateway
-5. Add basic rate limiting and heartbeat features to API gateway
+# Install the dependencies
+npm install
+
+# Start the development server
+npm run dev
+```
+
+#### Backend:
+
+```bash
+# Navigate to the backend directory
+cd backend
+
+# Install the Go dependencies
+go mod download
+
+# Start the development server
+go run ./cmd/main.go
+```
