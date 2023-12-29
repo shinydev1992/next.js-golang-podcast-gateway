@@ -71,7 +71,7 @@ const Home = () => {
           </span>
         </div>
       </div>
-      <PodcastList podcasts={podcasts ?? []} />
+      <PodcastList page={page} pageSize={pageSize} podcasts={podcasts ?? []} />
       <Pagination
         prevBtnDisabled={prevBtnDisabled}
         nextBtnDisabled={nextBtnDisabled}
