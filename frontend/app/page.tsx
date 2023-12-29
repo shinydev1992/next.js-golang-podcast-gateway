@@ -45,10 +45,9 @@ const Home = () => {
 
   useEffect(() => {
     setPrevBtnDisabled(page === 1);
-    setPageSize(10);
 
     refetch({
-      query: `search=${input}&page=${page}&limit=10`,
+      query: `search=${input}&page=${page}&limit=${pageSize}`,
     });
   }, [page]);
 
