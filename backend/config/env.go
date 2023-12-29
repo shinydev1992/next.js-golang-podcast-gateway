@@ -20,7 +20,7 @@ type Env struct {
 
 func NewEnv() *Env {
 	// Load environment variables from .env file
-	err := godotenv.Load("../.env")
+	err := godotenv.Load(".env")
 	if err != nil {
 		log.Fatal("Environment can't be loaded: ", err)
 	}
